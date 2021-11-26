@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="34b6296156ac4f688ba38dd12d34ac5f" Name="Diagram1" ZoomLevel="95">
+        <EntityTypeShape EntityType="practica_seguridadModel.estado" Width="1.5" PointX="0.75" PointY="2.375" />
+        <EntityTypeShape EntityType="practica_seguridadModel.historial_pagos" Width="1.5" PointX="9.75" PointY="2.25" />
+        <EntityTypeShape EntityType="practica_seguridadModel.municipio" Width="1.5" PointX="3" PointY="2.25" />
+        <EntityTypeShape EntityType="practica_seguridadModel.tarjeta" Width="1.5" PointX="7.5" PointY="2.125" />
+        <EntityTypeShape EntityType="practica_seguridadModel.usuario" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="practica_seguridadModel.FK__municipio__id_es__267ABA7A" />
+        <AssociationConnector Association="practica_seguridadModel.FK__usuario__id_esta__29572725" />
+        <AssociationConnector Association="practica_seguridadModel.FK__historial__id_ta__300424B4" />
+        <AssociationConnector Association="practica_seguridadModel.FK__usuario__id_muni__2A4B4B5E" />
+        <AssociationConnector Association="practica_seguridadModel.FK__tarjeta__id_usua__2D27B809" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

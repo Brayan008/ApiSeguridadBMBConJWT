@@ -1,0 +1,392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="practica_seguridadModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="estado">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_estado" Type="varchar" MaxLength="255" />
+        </EntityType>
+        <EntityType Name="historial_pagos">
+          <Key>
+            <PropertyRef Name="id_historial" />
+          </Key>
+          <Property Name="id_historial" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_tarjeta" Type="int" />
+          <Property Name="nombre_pago" Type="varchar" MaxLength="255" />
+          <Property Name="cantidad_pago" Type="int" />
+          <Property Name="fecha_pago" Type="date" />
+        </EntityType>
+        <EntityType Name="municipio">
+          <Key>
+            <PropertyRef Name="id_municipio" />
+          </Key>
+          <Property Name="id_municipio" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_municipio" Type="varchar" MaxLength="255" />
+          <Property Name="codigo_postal" Type="int" />
+          <Property Name="id_estado" Type="int" />
+        </EntityType>
+        <EntityType Name="tarjeta">
+          <Key>
+            <PropertyRef Name="id_tarjeta" />
+          </Key>
+          <Property Name="id_tarjeta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="id_usuario" Type="int" />
+          <Property Name="numero_tarjeta" Type="int" />
+          <Property Name="cvv" Type="int" />
+          <Property Name="fecha_experiacion" Type="int" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre_usuario" Type="varchar" MaxLength="255" />
+          <Property Name="primer_apellido" Type="varchar" MaxLength="255" />
+          <Property Name="segundo_apellido" Type="varchar" MaxLength="255" />
+          <Property Name="usuario" Type="varchar" MaxLength="255" />
+          <Property Name="correo_electronico" Type="varchar" MaxLength="255" />
+          <Property Name="contrasena" Type="varchar" MaxLength="255" />
+          <Property Name="curp" Type="varchar" MaxLength="255" />
+          <Property Name="rfc" Type="varchar" MaxLength="255" />
+          <Property Name="telefono" Type="int" />
+          <Property Name="id_estado" Type="int" />
+          <Property Name="id_municipio" Type="int" />
+          <Property Name="calle" Type="varchar" MaxLength="255" />
+          <Property Name="numero_exterior_calle" Type="int" />
+          <Property Name="numero_interior_calle" Type="int" />
+        </EntityType>
+        <Association Name="FK__historial__id_ta__300424B4">
+          <End Role="tarjeta" Type="Self.tarjeta" Multiplicity="0..1" />
+          <End Role="historial_pagos" Type="Self.historial_pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tarjeta">
+              <PropertyRef Name="id_tarjeta" />
+            </Principal>
+            <Dependent Role="historial_pagos">
+              <PropertyRef Name="id_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__municipio__id_es__267ABA7A">
+          <End Role="estado" Type="Self.estado" Multiplicity="0..1" />
+          <End Role="municipio" Type="Self.municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="municipio">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tarjeta__id_usua__2D27B809">
+          <End Role="usuario" Type="Self.usuario" Multiplicity="0..1" />
+          <End Role="tarjeta" Type="Self.tarjeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tarjeta">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_esta__29572725">
+          <End Role="estado" Type="Self.estado" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_muni__2A4B4B5E">
+          <End Role="municipio" Type="Self.municipio" Multiplicity="0..1" />
+          <End Role="usuario" Type="Self.usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="municipio">
+              <PropertyRef Name="id_municipio" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_municipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="practica_seguridadModelStoreContainer">
+          <EntitySet Name="estado" EntityType="Self.estado" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="historial_pagos" EntityType="Self.historial_pagos" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="municipio" EntityType="Self.municipio" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tarjeta" EntityType="Self.tarjeta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="usuario" EntityType="Self.usuario" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__historial__id_ta__300424B4" Association="Self.FK__historial__id_ta__300424B4">
+            <End Role="tarjeta" EntitySet="tarjeta" />
+            <End Role="historial_pagos" EntitySet="historial_pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__municipio__id_es__267ABA7A" Association="Self.FK__municipio__id_es__267ABA7A">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="municipio" EntitySet="municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tarjeta__id_usua__2D27B809" Association="Self.FK__tarjeta__id_usua__2D27B809">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="tarjeta" EntitySet="tarjeta" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_esta__29572725" Association="Self.FK__usuario__id_esta__29572725">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_muni__2A4B4B5E" Association="Self.FK__usuario__id_muni__2A4B4B5E">
+            <End Role="municipio" EntitySet="municipio" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="practica_seguridadModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityContainer Name="practica_seguridadEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="estado" EntityType="practica_seguridadModel.estado" />
+          <EntitySet Name="historial_pagos" EntityType="practica_seguridadModel.historial_pagos" />
+          <EntitySet Name="municipio" EntityType="practica_seguridadModel.municipio" />
+          <EntitySet Name="tarjeta" EntityType="practica_seguridadModel.tarjeta" />
+          <EntitySet Name="usuario" EntityType="practica_seguridadModel.usuario" />
+          <AssociationSet Name="FK__municipio__id_es__267ABA7A" Association="practica_seguridadModel.FK__municipio__id_es__267ABA7A">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="municipio" EntitySet="municipio" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_esta__29572725" Association="practica_seguridadModel.FK__usuario__id_esta__29572725">
+            <End Role="estado" EntitySet="estado" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__historial__id_ta__300424B4" Association="practica_seguridadModel.FK__historial__id_ta__300424B4">
+            <End Role="tarjeta" EntitySet="tarjeta" />
+            <End Role="historial_pagos" EntitySet="historial_pagos" />
+          </AssociationSet>
+          <AssociationSet Name="FK__usuario__id_muni__2A4B4B5E" Association="practica_seguridadModel.FK__usuario__id_muni__2A4B4B5E">
+            <End Role="municipio" EntitySet="municipio" />
+            <End Role="usuario" EntitySet="usuario" />
+          </AssociationSet>
+          <AssociationSet Name="FK__tarjeta__id_usua__2D27B809" Association="practica_seguridadModel.FK__tarjeta__id_usua__2D27B809">
+            <End Role="usuario" EntitySet="usuario" />
+            <End Role="tarjeta" EntitySet="tarjeta" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="estado">
+          <Key>
+            <PropertyRef Name="id_estado" />
+          </Key>
+          <Property Name="id_estado" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_estado" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+        </EntityType>
+        <EntityType Name="historial_pagos">
+          <Key>
+            <PropertyRef Name="id_historial" />
+          </Key>
+          <Property Name="id_historial" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_tarjeta" Type="Int32" />
+          <Property Name="nombre_pago" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="cantidad_pago" Type="Int32" />
+          <Property Name="fecha_pago" Type="DateTime" Precision="0" />
+        </EntityType>
+        <EntityType Name="municipio">
+          <Key>
+            <PropertyRef Name="id_municipio" />
+          </Key>
+          <Property Name="id_municipio" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_municipio" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="codigo_postal" Type="Int32" />
+          <Property Name="id_estado" Type="Int32" />
+        </EntityType>
+        <EntityType Name="tarjeta">
+          <Key>
+            <PropertyRef Name="id_tarjeta" />
+          </Key>
+          <Property Name="id_tarjeta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="id_usuario" Type="Int32" />
+          <Property Name="numero_tarjeta" Type="Int32" />
+          <Property Name="cvv" Type="Int32" />
+          <Property Name="fecha_experiacion" Type="Int32" />
+          <NavigationProperty Name="historial_pagos" Relationship="practica_seguridadModel.FK__historial__id_ta__300424B4" FromRole="tarjeta" ToRole="historial_pagos" />
+        </EntityType>
+        <EntityType Name="usuario">
+          <Key>
+            <PropertyRef Name="id_usuario" />
+          </Key>
+          <Property Name="id_usuario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre_usuario" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="primer_apellido" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="segundo_apellido" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="usuario1" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="correo_electronico" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="contrasena" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="curp" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="rfc" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="telefono" Type="Int32" />
+          <Property Name="id_estado" Type="Int32" />
+          <Property Name="id_municipio" Type="Int32" />
+          <Property Name="calle" Type="String" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="numero_exterior_calle" Type="Int32" />
+          <Property Name="numero_interior_calle" Type="Int32" />
+          <NavigationProperty Name="estado" Relationship="practica_seguridadModel.FK__usuario__id_esta__29572725" FromRole="usuario" ToRole="estado" />
+          <NavigationProperty Name="municipio" Relationship="practica_seguridadModel.FK__usuario__id_muni__2A4B4B5E" FromRole="usuario" ToRole="municipio" />
+          <NavigationProperty Name="tarjeta" Relationship="practica_seguridadModel.FK__tarjeta__id_usua__2D27B809" FromRole="usuario" ToRole="tarjeta" />
+        </EntityType>
+        <Association Name="FK__municipio__id_es__267ABA7A">
+          <End Type="practica_seguridadModel.estado" Role="estado" Multiplicity="0..1" />
+          <End Type="practica_seguridadModel.municipio" Role="municipio" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="municipio">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_esta__29572725">
+          <End Type="practica_seguridadModel.estado" Role="estado" Multiplicity="0..1" />
+          <End Type="practica_seguridadModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="estado">
+              <PropertyRef Name="id_estado" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_estado" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__historial__id_ta__300424B4">
+          <End Type="practica_seguridadModel.tarjeta" Role="tarjeta" Multiplicity="0..1" />
+          <End Type="practica_seguridadModel.historial_pagos" Role="historial_pagos" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tarjeta">
+              <PropertyRef Name="id_tarjeta" />
+            </Principal>
+            <Dependent Role="historial_pagos">
+              <PropertyRef Name="id_tarjeta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__usuario__id_muni__2A4B4B5E">
+          <End Type="practica_seguridadModel.municipio" Role="municipio" Multiplicity="0..1" />
+          <End Type="practica_seguridadModel.usuario" Role="usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="municipio">
+              <PropertyRef Name="id_municipio" />
+            </Principal>
+            <Dependent Role="usuario">
+              <PropertyRef Name="id_municipio" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__tarjeta__id_usua__2D27B809">
+          <End Type="practica_seguridadModel.usuario" Role="usuario" Multiplicity="0..1" />
+          <End Type="practica_seguridadModel.tarjeta" Role="tarjeta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="usuario">
+              <PropertyRef Name="id_usuario" />
+            </Principal>
+            <Dependent Role="tarjeta">
+              <PropertyRef Name="id_usuario" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="practica_seguridadModelStoreContainer" CdmEntityContainer="practica_seguridadEntities">
+          <EntitySetMapping Name="estado">
+            <EntityTypeMapping TypeName="practica_seguridadModel.estado">
+              <MappingFragment StoreEntitySet="estado">
+                <ScalarProperty Name="nombre_estado" ColumnName="nombre_estado" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="historial_pagos">
+            <EntityTypeMapping TypeName="practica_seguridadModel.historial_pagos">
+              <MappingFragment StoreEntitySet="historial_pagos">
+                <ScalarProperty Name="fecha_pago" ColumnName="fecha_pago" />
+                <ScalarProperty Name="cantidad_pago" ColumnName="cantidad_pago" />
+                <ScalarProperty Name="nombre_pago" ColumnName="nombre_pago" />
+                <ScalarProperty Name="id_tarjeta" ColumnName="id_tarjeta" />
+                <ScalarProperty Name="id_historial" ColumnName="id_historial" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="municipio">
+            <EntityTypeMapping TypeName="practica_seguridadModel.municipio">
+              <MappingFragment StoreEntitySet="municipio">
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="codigo_postal" ColumnName="codigo_postal" />
+                <ScalarProperty Name="nombre_municipio" ColumnName="nombre_municipio" />
+                <ScalarProperty Name="id_municipio" ColumnName="id_municipio" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tarjeta">
+            <EntityTypeMapping TypeName="practica_seguridadModel.tarjeta">
+              <MappingFragment StoreEntitySet="tarjeta">
+                <ScalarProperty Name="fecha_experiacion" ColumnName="fecha_experiacion" />
+                <ScalarProperty Name="cvv" ColumnName="cvv" />
+                <ScalarProperty Name="numero_tarjeta" ColumnName="numero_tarjeta" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+                <ScalarProperty Name="id_tarjeta" ColumnName="id_tarjeta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="usuario">
+            <EntityTypeMapping TypeName="practica_seguridadModel.usuario">
+              <MappingFragment StoreEntitySet="usuario">
+                <ScalarProperty Name="numero_interior_calle" ColumnName="numero_interior_calle" />
+                <ScalarProperty Name="numero_exterior_calle" ColumnName="numero_exterior_calle" />
+                <ScalarProperty Name="calle" ColumnName="calle" />
+                <ScalarProperty Name="id_municipio" ColumnName="id_municipio" />
+                <ScalarProperty Name="id_estado" ColumnName="id_estado" />
+                <ScalarProperty Name="telefono" ColumnName="telefono" />
+                <ScalarProperty Name="rfc" ColumnName="rfc" />
+                <ScalarProperty Name="curp" ColumnName="curp" />
+                <ScalarProperty Name="contrasena" ColumnName="contrasena" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="usuario1" ColumnName="usuario" />
+                <ScalarProperty Name="segundo_apellido" ColumnName="segundo_apellido" />
+                <ScalarProperty Name="primer_apellido" ColumnName="primer_apellido" />
+                <ScalarProperty Name="nombre_usuario" ColumnName="nombre_usuario" />
+                <ScalarProperty Name="id_usuario" ColumnName="id_usuario" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

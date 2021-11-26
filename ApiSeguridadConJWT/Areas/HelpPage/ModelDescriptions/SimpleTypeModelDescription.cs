@@ -1,0 +1,6 @@
+namespace ApiSeguridadConJWT.Areas.HelpPage.ModelDescriptions
+{
+    public class SimpleTypeModelDescription : ModelDescription
+    {
+    }
+}
